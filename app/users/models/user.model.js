@@ -18,13 +18,12 @@ var UserSchema = new Schema({
     }
 });
 
-// BrewerySchema.pre('save', function(next) {
-//     var brewery = this;
-//     if (this.isNew) {
-//         brewery.created = new Date();
-//     }
-//     brewery.updated = new Date();
-//     next();
-// });
+UserSchema.pre('save', function(next) {
+    var user = this;
+    if(this.isModified('password') || this.isNew) {
+        user.password = user.password;
+    }
+    next();
+});
 
 module.exports = mongoose.model('User', UserSchema);
